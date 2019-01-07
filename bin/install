@@ -23,7 +23,7 @@ install() {
   tar -xzf luarocks*.gz
   rm -rf luarocks*.gz
   cd luarocks*
-  ./configure --prefix=$install_dir/luajit/bin/luajit --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
+  ./configure --prefix=$install_dir/luajit --with-lua-bin=$install_dir/luajit/bin --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
   make build || exit 1
   make install || exit 1
 
