@@ -27,8 +27,8 @@ install() {
   make build || exit 1
   make install || exit 1
 
-  cd $build_dir/openresty*/build/lua-cjson-*
-  luarocks make || exit 1
+  # cd $build_dir/openresty*/build/lua-cjson-*
+  # luarocks make || exit 1
 }
 
 install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
