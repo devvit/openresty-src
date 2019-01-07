@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+install() {
+  version=$2
+  install_dir=$3
+
+  build_dir=$(mktemp -d)
+  cd $build_dir
+
+  curl -fSL -O https://openresty.org/download/openresty-$version.tar.gz
+  tar -xzf openresty*.gz
+  rm -rf openresty*.gz
+  cd openresty*
+  sed -ie 's/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 1/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 0/g' bundle/lua-cjson-*/lua_cjson.c
+  ./configure --prefix=$install_dir $CONFIGURE_OPTIONS
+  make -s install || exit 1
+
+  export PATH=$PATH:$install_dir/luajit/bin
+
+  curl -fSL -O https://luarocks.org/releases/luarocks-2.4.4.tar.gz
+  tar -xzf luarocks*.gz
+  rm -rf luarocks*.gz
+  cd luarocks*
+  ./configure --prefix=$install_dir/luajit --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
+  make build || exit 1
+  make install || exit 1
+
+  cd $build_dir/openresty*/build/lua-cjson-*
+  luarocks make || exit 1
+
+  platform=$(uname)
+
+  if [ "$platform" == 'Darwin' ]; then
+    ssl_dir=/usr/local/opt/openssl
+    luarocks install luasec OPENSSL_DIR=$ssl_dir || exit 1
+    luarocks install cqueues CRYPTO_DIR=$ssl_dir OPENSSL_DIR=$ssl_dir || exit 1
+    luarocks install luaossl CRYPTO_DIR=$ssl_dir OPENSSL_DIR=$ssl_dir || exit 1
+  fi
+
+  luarocks install https://raw.githubusercontent.com/torch/cwrap/master/rocks/cwrap-scm-1.rockspec || exit 1
+  luarocks install https://raw.githubusercontent.com/torch/paths/master/rocks/paths-scm-1.rockspec || exit 1
+  luarocks install https://raw.githubusercontent.com/torch/torch7/master/rocks/torch-scm-1.rockspec || exit 1
+  luarocks install https://raw.githubusercontent.com/torch/trepl/master/trepl-scm-1.rockspec || exit 1
+  luarocks install https://raw.githubusercontent.com/torch/threads/master/rocks/threads-scm-1.rockspec || exit 1
+}
+
+install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
