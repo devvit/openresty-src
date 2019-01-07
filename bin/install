@@ -27,21 +27,6 @@ install() {
 
   cd $build_dir/openresty*/build/lua-cjson-*
   luarocks make || exit 1
-
-  platform=$(uname)
-
-  if [ "$platform" == 'Darwin' ]; then
-    ssl_dir=/usr/local/opt/openssl
-    luarocks install luasec OPENSSL_DIR=$ssl_dir || exit 1
-    luarocks install cqueues CRYPTO_DIR=$ssl_dir OPENSSL_DIR=$ssl_dir || exit 1
-    luarocks install luaossl CRYPTO_DIR=$ssl_dir OPENSSL_DIR=$ssl_dir || exit 1
-  fi
-
-  luarocks install https://raw.githubusercontent.com/torch/cwrap/master/rocks/cwrap-scm-1.rockspec || exit 1
-  luarocks install https://raw.githubusercontent.com/torch/paths/master/rocks/paths-scm-1.rockspec || exit 1
-  luarocks install https://raw.githubusercontent.com/torch/torch7/master/rocks/torch-scm-1.rockspec || exit 1
-  luarocks install https://raw.githubusercontent.com/torch/trepl/master/trepl-scm-1.rockspec || exit 1
-  luarocks install https://raw.githubusercontent.com/torch/threads/master/rocks/threads-scm-1.rockspec || exit 1
 }
 
 install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
