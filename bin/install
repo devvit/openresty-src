@@ -23,12 +23,12 @@ install() {
   tar -xzf luarocks*.gz
   rm -rf luarocks*.gz
   cd luarocks*
-  ./configure --prefix=$install_dir/luajit --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
+  ./configure --prefix=$install_dir/luajit/bin/luajit --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
   make build || exit 1
   make install || exit 1
 
-  # cd $build_dir/openresty*/build/lua-cjson-*
-  # luarocks make || exit 1
+  cd $build_dir/openresty*/build/lua-cjson-*
+  luarocks make || exit 1
 }
 
 install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
