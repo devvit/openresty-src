@@ -20,7 +20,7 @@ install() {
 
   # luarocks
   # curl -fSL -O https://luarocks.org/releases/luarocks-2.4.4.tar.gz
-  curl -fSL -O https://luarocks.org/releases/luarocks-3.3.0.tar.gz
+  curl -fSL -O https://luarocks.org/releases/luarocks-3.3.1.tar.gz
   tar -xzf luarocks*.gz
   rm -rf luarocks*.gz
   cd luarocks*
