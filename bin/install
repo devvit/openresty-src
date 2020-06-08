@@ -12,7 +12,7 @@ install() {
   tar -xzf openresty*.gz
   rm -rf openresty*.gz
   cd openresty*
-  sed -ie 's/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 1/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 0/g' bundle/lua-cjson-*/lua_cjson.c
+  # sed -ie 's/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 1/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 0/g' bundle/lua-cjson-*/lua_cjson.c
   ./configure --prefix=$install_dir $CONFIGURE_OPTIONS
   make -s install || exit 1
 
