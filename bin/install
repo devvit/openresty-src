@@ -19,13 +19,13 @@ install() {
   export PATH=$PATH:$install_dir/luajit/bin
 
   # luarocks
-  # curl -fSL -O https://luarocks.org/releases/luarocks-2.4.4.tar.gz
   curl -fSL -O https://luarocks.org/releases/luarocks-3.3.1.tar.gz
   tar -xzf luarocks*.gz
   rm -rf luarocks*.gz
   cd luarocks*
-  ./configure --prefix=$install_dir/luajit --with-lua-bin=$install_dir/luajit/bin --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
-  make build || exit 1
+  ./configure --prefix=$install_dir/luajit --with-lua=$install_dir/luajit
+  # ./configure --prefix=$install_dir/luajit --with-lua-bin=$install_dir/luajit/bin --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
+  make || exit 1
   make install || exit 1
 
   cd $build_dir/openresty*/build/lua-cjson-*
