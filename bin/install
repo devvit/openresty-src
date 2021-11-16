@@ -27,7 +27,7 @@ install() {
   export PATH=$PATH:$install_dir/luajit/bin
 
   # luarocks
-  curl -fSL -O https://luarocks.org/releases/luarocks-3.5.0.tar.gz
+  curl -fSL -O https://luarocks.org/releases/luarocks-3.7.0.tar.gz
   tar -xf luarocks*.gz
   rm -rf luarocks*.gz
   cd luarocks*
