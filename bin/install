@@ -14,6 +14,10 @@ install() {
   cd openssl*
   ./config --prefix=$install_dir/openssl
   make && make install_sw || exit 1
+  
+  curl -fSL -o $install_dir/openssl/ssl/cert.pem http://curl.haxx.se/ca/cacert.pem || exit 1
+  
+  cd $build_dir
 
   # openresty
   curl -fSL -O https://openresty.org/download/openresty-$version.tar.gz
@@ -25,6 +29,8 @@ install() {
   make -s install || exit 1
 
   export PATH=$PATH:$install_dir/luajit/bin
+  
+  cd $build_dir
 
   # luarocks
   curl -fSL -O https://luarocks.org/releases/luarocks-3.7.0.tar.gz
