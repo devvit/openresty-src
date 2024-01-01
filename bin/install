@@ -8,7 +8,7 @@ install() {
   cd $build_dir
   
   # openssl
-  curl -fSL -O https://www.openssl.org/source/openssl-1.1.1u.tar.gz
+  curl -fSL -O https://www.openssl.org/source/openssl-1.1.1w.tar.gz
   tar -xf openssl*.gz
   rm -rf openssl*.gz
   cd openssl*
