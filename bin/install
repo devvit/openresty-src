@@ -33,7 +33,7 @@ install() {
   rm -rf openresty*.gz
   cd openresty*
   # sed -ie 's/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 1/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 0/g' bundle/lua-cjson-*/lua_cjson.c
-  ./configure --prefix=$install_dir --with-pcre=$install_dir/pcre --with-pcre-jit --with-http_ssl_module \
+  ./configure --prefix=$install_dir --with-pcre --with-pcre-jit --with-http_ssl_module \
     --with-cc-opt="-I$install_dir/openssl/include -I$install_dir/pcre/include" --with-ld-opt="-L$install_dir/openssl/lib -L$install_dir/pcre/lib" $CONFIGURE_OPTIONS
   make -s install || exit 1
 
@@ -42,7 +42,7 @@ install() {
   cd $build_dir
 
   # luarocks
-  curl -fSL -O https://luarocks.org/releases/luarocks-3.9.2.tar.gz
+  curl -fSL -O https://luarocks.org/releases/luarocks-3.11.0.tar.gz
   tar -xf luarocks*.gz
   rm -rf luarocks*.gz
   cd luarocks*
