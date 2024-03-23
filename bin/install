@@ -33,7 +33,8 @@ install() {
   rm -rf openresty*.gz
   cd openresty*
   # sed -ie 's/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 1/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 0/g' bundle/lua-cjson-*/lua_cjson.c
-  ./configure --prefix=$install_dir --with-pcre=$install_dir/pcre --with-pcre-jit --with-http_ssl_module --with-cc-opt="-I$install_dir/openssl/include" --with-ld-opt="-L$install_dir/openssl/lib" $CONFIGURE_OPTIONS
+  ./configure --prefix=$install_dir --with-pcre=$install_dir/pcre --with-pcre-jit --with-http_ssl_module \
+    --with-cc-opt="-I$install_dir/openssl/include -I$install_dir/pcre/include" --with-ld-opt="-L$install_dir/openssl/lib -L$install_dir/pcre/lib" $CONFIGURE_OPTIONS
   make -s install || exit 1
 
   export PATH=$PATH:$install_dir/luajit/bin
