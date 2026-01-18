@@ -23,7 +23,7 @@ install() {
   rm -rf openssl*.gz
   cd openssl*
   ./config --prefix=$install_dir/openssl
-  make -s install || exit 1
+  make && make -s install || exit 1
   curl -fSL -o $install_dir/openssl/ssl/cert.pem http://curl.haxx.se/ca/cacert.pem || exit 1
 
   # pcre
@@ -32,13 +32,13 @@ install() {
   rm -rf pcre*.gz
   cd pcre*
   ./configure --prefix=$install_dir/pcre $pcre_build_args
-  make -s install || exit 1
+  make && make -s install || exit 1
 
   # libyaml
   git clone --depth 1 https://github.com/yaml/libyaml
   cd libyaml
   ./configure --prefix=$install_dir
-  make -s install || exit 1
+  make && make -s install || exit 1
 
   cd $build_dir
 
@@ -50,7 +50,7 @@ install() {
   # sed -ie 's/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 1/DEFAULT_ENCODE_EMPTY_TABLE_AS_OBJECT 0/g' bundle/lua-cjson-*/lua_cjson.c
   ./configure --prefix=$install_dir --with-pcre --with-pcre-jit --with-http_ssl_module \
     --with-cc-opt="-I$install_dir/openssl/include -I$install_dir/pcre/include" --with-ld-opt="-L$install_dir/openssl/lib -L$install_dir/pcre/lib" $CONFIGURE_OPTIONS
-  make -s install || exit 1
+  make && make -s install || exit 1
 
   export PATH=$PATH:$install_dir/luajit/bin
 
@@ -63,8 +63,7 @@ install() {
   cd luarocks*
   ./configure --prefix=$install_dir/luajit --with-lua=$install_dir/luajit
   # ./configure --prefix=$install_dir/luajit --with-lua-bin=$install_dir/luajit/bin --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
-  make || exit 1
-  make install || exit 1
+  make && make install || exit 1
 
   # cd $build_dir/openresty*/build/lua-cjson-*
   # luarocks make || exit 1
