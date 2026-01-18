@@ -10,10 +10,12 @@ install() {
   if [[ $version == "legacy" ]]; then
     ssl_ver='1.1.1w'
     pcre_ver='8.45'
+    pcre_url="https://downloads.sourceforge.net/project/pcre/pcre/${pcre_ver}/pcre-${pcre_ver}.tar.gz"
     pcre_build_args='--disable-cpp --enable-utf --enable-unicode-properties --enable-jit'
   else
     ssl_ver='3.4.3'
     pcre_ver='10.44'
+    pcre_url="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${pcre_ver}/pcre2-${pcre_ver}.tar.gz"
     pcre_build_args='--enable-jit --enable-unicode'
   fi
 
@@ -27,11 +29,11 @@ install() {
   curl -fSL -o $install_dir/openssl/ssl/cert.pem http://curl.haxx.se/ca/cacert.pem || exit 1
 
   # pcre
-  curl -fSL -O "https://downloads.sourceforge.net/project/pcre/pcre/${pcre_ver}/pcre-${pcre_ver}.tar.gz"
+  curl -fSL -O $pcre_url
   tar -xf pcre*.gz
   rm -rf pcre*.gz
   cd pcre*
-  ./configure --prefix=$install_dir/pcre
+  ./configure --prefix=$install_dir/pcre $pcre_build_args
   make && make -s install || exit 1
 
   cd $build_dir
