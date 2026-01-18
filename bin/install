@@ -34,12 +34,6 @@ install() {
   ./configure --prefix=$install_dir/pcre $pcre_build_args
   make && make -s install || exit 1
 
-  # libyaml
-  git clone --depth 1 https://github.com/yaml/libyaml
-  cd libyaml
-  ./configure --prefix=$install_dir
-  make && make -s install || exit 1
-
   cd $build_dir
 
   # openresty
