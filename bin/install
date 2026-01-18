@@ -10,9 +10,11 @@ install() {
   if [[ $version == "legacy" ]]; then
     ssl_ver='1.1.1w'
     pcre_ver='8.45'
+    pcre_build_args='--disable-cpp --enable-utf --enable-unicode-properties --enable-jit'
   else
     ssl_ver='3.4.3'
     pcre_ver='10.44'
+    pcre_build_args='--enable-jit --enable-unicode'
   fi
 
   # openssl
@@ -21,17 +23,22 @@ install() {
   rm -rf openssl*.gz
   cd openssl*
   ./config --prefix=$install_dir/openssl
-  make && make install || exit 1
+  make -s install || exit 1
+  curl -fSL -o $install_dir/openssl/ssl/cert.pem http://curl.haxx.se/ca/cacert.pem || exit 1
 
   # pcre
   curl -fSL -O "https://downloads.sourceforge.net/project/pcre/pcre/${pcre_ver}/pcre-${pcre_ver}.tar.gz"
   tar -xf pcre*.gz
   rm -rf pcre*.gz
   cd pcre*
-  ./configure --prefix=$install_dir/pcre --disable-cpp --enable-utf --enable-unicode-properties --enable-jit
-  make && make install || exit 1
+  ./configure --prefix=$install_dir/pcre $pcre_build_args
+  make -s install || exit 1
 
-  curl -fSL -o $install_dir/openssl/ssl/cert.pem http://curl.haxx.se/ca/cacert.pem || exit 1
+  # libyaml
+  git clone --depth 1 https://github.com/yaml/libyaml
+  cd libyaml
+  ./configure --prefix=$install_dir
+  make -s install || exit 1
 
   cd $build_dir
 
