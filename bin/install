@@ -31,7 +31,7 @@ install() {
   tar -xf pcre*.gz
   rm -rf pcre*.gz
   cd pcre*
-  ./configure --prefix=$install_dir/pcre $pcre_build_args
+  ./configure --prefix=$install_dir/pcre
   make && make -s install || exit 1
 
   cd $build_dir
