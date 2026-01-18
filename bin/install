@@ -43,7 +43,7 @@ install() {
   cd $build_dir
 
   # openresty
-  curl -fSL -O https://openresty.org/download/openresty-1.25.3.2.tar.gz
+  curl -fSL -O "https://openresty.org/download/openresty-${version}.tar.gz"
   tar -xf openresty*.gz
   rm -rf openresty*.gz
   cd openresty*
@@ -57,13 +57,13 @@ install() {
   cd $build_dir
 
   # luarocks
-  curl -fSL -O https://luarocks.org/releases/luarocks-3.12.2.tar.gz
+  curl -fSL -O https://luarocks.org/releases/luarocks-3.13.0.tar.gz
   tar -xf luarocks*.gz
   rm -rf luarocks*.gz
   cd luarocks*
   ./configure --prefix=$install_dir/luajit --with-lua=$install_dir/luajit
   # ./configure --prefix=$install_dir/luajit --with-lua-bin=$install_dir/luajit/bin --with-lua-include=$install_dir/luajit/include/luajit-2.1 --lua-suffix=jit
-  make && make install || exit 1
+  make && make -s install || exit 1
 
   # cd $build_dir/openresty*/build/lua-cjson-*
   # luarocks make || exit 1
