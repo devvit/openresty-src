@@ -7,17 +7,10 @@ install() {
   build_dir=$(mktemp -d)
   cd $build_dir
 
-  if [[ $version == "1.25.3.2" ]]; then
-    ssl_ver='1.1.1w'
-    pcre_ver='8.45'
-    pcre_url="https://downloads.sourceforge.net/project/pcre/pcre/${pcre_ver}/pcre-${pcre_ver}.tar.gz"
-    pcre_build_args='--disable-cpp --enable-utf --enable-unicode-properties --enable-jit'
-  else
-    ssl_ver='3.4.3'
-    pcre_ver='10.44'
-    pcre_url="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${pcre_ver}/pcre2-${pcre_ver}.tar.gz"
-    pcre_build_args='--enable-jit --enable-unicode'
-  fi
+  ssl_ver='3.4.3'
+  pcre_ver='10.44'
+  pcre_url="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${pcre_ver}/pcre2-${pcre_ver}.tar.gz"
+  pcre_build_args='--enable-jit --enable-unicode'
 
   # openssl
   curl -fSL -O "https://www.openssl.org/source/openssl-${ssl_ver}.tar.gz"
